@@ -1,30 +1,50 @@
-l1 = ["ali", "python", "REZA", "", "   ", "programming"]
-
-def predicate(strings: list[str]) -> list[str]:
+def is_non_blank(string: str) -> bool:
     """
-    Reads a list of strings ,fliters the empty ones and capitalize the remaining ones using python funcs.
-    Personaly prefer this to predicate 2 because it is more profesional than doing it with comprehension.
+    This func checks if every string in its input is empty or not.
     Parameters:
-        strings (str): Reads a list of random strings that may be some empty strings among them.
+        string(str): The string that the func checks if its empty or not.
+
     Returns:
-        list[str]: A list wich is a filtered and capitalized version of input that has no empty sttrings. 
+        bool: If the string is empty it returns False and if it's not it returns True. 
     """
-    l_01 = list(map(lambda s: s.capitalize(), filter(lambda s: s.strip()!="", strings)))
-    return l_01
+    return string.strip() != ""
+    
 
-l2 = predicate(l1)
-
-def predicate2(strings: list[str]) -> list[str]:
+def format_string(s: str) -> str:
     """
-        Reads a list of strings ,fliters the empty ones and capitalize the remaining ones using comprehensions.
-        
-        Parameters:
-            strings (str): Reads a list of random strings that may be some empty strings among them.
-        Returns:
-            list[str]: A list wich is a filtered and capitalized version of input that has no empty sttrings. 
-        """
-    l_01 = [string.strip() for string in strings if string.strip()!=""]
-    l_02 = [string.capitalize() for string in l_01]
-    return l_02
+    Removes leading/trailing whitespaces and capitalizes the first character of the string.
 
-print(predicate2(l1))
+    Parameters:
+        s (str): The input string to be formatted.
+
+    Returns:
+        str: The cleaned string with no surrounding space and the first letter capitalized.
+    """
+    return s.strip().capitalize()
+
+def clean_with_functional(strings: list[str]) -> list[str]:
+    """
+    Filters out blank strings and formats the remaining non-blank items using functional programming.
+
+    Parameters:
+        strings (list[str]): A list of input strings to be processed.
+
+    Returns:
+        list[str]: A list of non-blank, formatted strings.
+    """   
+    res = list(filter(is_non_blank, strings))
+    res = list(map(format_string, res))
+    return res
+
+def clean_with_comprehension(strings: list[str]) -> list[str]:
+    """
+    Filters out blank strings and formats the remaining non-blank items using list comprehensions.
+
+    Parameters:
+        strings (list[str]): A list of input strings to be processed.
+
+    Returns:
+        list[str]: A list of non-blank, formatted strings.
+    """
+    res = [format_string(string) for string in strings if is_non_blank(string)]
+    return res
